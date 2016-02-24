@@ -1,4 +1,4 @@
-STUDENT_ID=2298962
+STUDENT_ID=XXXXXXX
 
 all:
 	gcc -g signals.c -o signals

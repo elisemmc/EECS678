@@ -19,11 +19,15 @@ void catch_int(int sig_num)
     /* prompt the user to tell us if to really
      * exit or not */
     printf("\nReally exit? [Y/n]: ");
-    unsigned int alarm(10);
+    alarm(10);
     fflush(stdout);
+    
+    
     fgets(answer, sizeof(answer), stdin);
+    
     if (answer[0] == 'n' || answer[0] == 'N') {
       printf("\nContinuing\n");
+      alarm(0);
       fflush(stdout);
       /* 
        * Reset Ctrl-C counter
@@ -46,11 +50,12 @@ void catch_tstp(int sig_num)
   fflush(stdout);
 }
 
-/* the SIGALARM signal handler */
+/* the SIGALRM signal handler */
 void catch_timeout()
 {
-  printf("\n\nUser took longer than 10 sec to answer\nExiting...\n\n");
+  printf("\nUser taking too long to respond. Exiting...\n\n");
   fflush(stdout);
+  exit(0);
 }
 
 int main(int argc, char* argv[])
@@ -65,6 +70,9 @@ int main(int argc, char* argv[])
   struct sigaction c_act;
   c_act.sa_handler = catch_int;
   sigemptyset(&c_act.sa_mask);
+
+  sigdelset(&mask_set, SIGALRM);
+
   c_act.sa_flags = 0;
   sigaction(SIGINT, &c_act, 0);
 
@@ -78,7 +86,7 @@ int main(int argc, char* argv[])
   t_act.sa_handler = catch_timeout;
   sigemptyset(&t_act.sa_mask);
   t_act.sa_flags = 0;
-  sigaction(SIGALARM, &t_act, 0);
+  sigaction(SIGALRM, &t_act, 0);
 
   while(1)
   {
