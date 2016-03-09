@@ -31,8 +31,10 @@ void *inc_count(void *arg)
      * does their repsective locations have for critical section
      * existence and the need for Critical section protection?
      */
+    pthread_mutex_lock(&count_mutex);
     count = count +  my_args->inc;
     loc = loc +  my_args->inc;
+    pthread_mutex_unlock(&count_mutex);
   }
   printf("Thread: %d finished. Counted: %d\n", my_args->tid, loc);
   free(my_args);
