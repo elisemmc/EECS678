@@ -284,12 +284,15 @@ void *producer (void *parg)
      */
     do_work(PRODUCER_CPU, PRODUCER_BLOCK);
 
+    pthread_mutex_lock(fifo->mutex);
+
     /*
      * If the queue is full, we have no place to put anything we
      * produce, so wait until it is not full.
      */
     while (fifo->full && *total_produced != WORK_MAX) {
       printf ("prod %d:  FULL.\n", my_tid);
+      pthread_cond_wait(fifo->notFull, fifo->mutex);
     }
 
     /*
@@ -308,12 +311,18 @@ void *producer (void *parg)
     item_produced = (*total_produced)++;
     queueAdd (fifo, item_produced);
 
+    pthread_mutex_unlock(fifo->mutex);
+    pthread_cond_broadcast(fifo->notEmpty);
+
     /*
      * Announce the production outside the critical section 
      */
     printf("prod %d:  %d.\n", my_tid, item_produced);
 
   }
+
+  pthread_mutex_unlock(fifo->mutex);
+  pthread_cond_broadcast(fifo->notEmpty);
 
   printf("prod %d:  exited\n", my_tid);
   return (NULL);
@@ -338,12 +347,16 @@ void *consumer (void *carg)
    * reaches the configured maximum
    */
   while (1) {
+
+    pthread_mutex_lock(fifo->mutex);
+
     /*
      * If the queue is empty, there is nothing to do, so wait until it
      * si not empty.
      */
     while (fifo->empty && *total_consumed != WORK_MAX) {
       printf ("con %d:   EMPTY.\n", my_tid);
+      pthread_cond_wait(fifo->notEmpty, fifo->mutex);
     }
 
     /*
@@ -362,7 +375,9 @@ void *consumer (void *carg)
      */
     queueRemove (fifo, &item_consumed);
     (*total_consumed)++;
-
+    
+    pthread_mutex_unlock(fifo->mutex);
+    pthread_cond_broadcast(fifo->notFull);
 
     /*
      * Do work outside the critical region to consume the item
@@ -373,6 +388,9 @@ void *consumer (void *carg)
 
   }
 
+  pthread_mutex_unlock(fifo->mutex);
+  pthread_cond_broadcast(fifo->notFull);
+  
   printf("con %d:   exited\n", my_tid);
   return (NULL);
 }
