@@ -3,7 +3,7 @@
 #
 MY_LAST_NAME = "lastname"
 
-all: dp # dp_asymmetric dp_waiter
+all: dp dp_asymmetric # dp_waiter
 
 dp: dining_philosophers.c
 	gcc -g dining_philosophers.c -lpthread -lm -o dp
