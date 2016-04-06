@@ -1,7 +1,8 @@
 # Add the dp_asymmetric and dp_waiter targets to all as you implement
 # them
 #
-MY_LAST_NAME = "lastname"
+STUDENT_ID = "2298962"
+MY_LAST_NAME = "McEllhiney"
 
 all: dp dp_asymmetric dp_waiter
 
