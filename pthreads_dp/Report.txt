@@ -1,4 +1,4 @@
-1. Describe the asymmetric solution. How does the asymmetric solution guarantee the philosophers
+﻿1. Describe the asymmetric solution. How does the asymmetric solution guarantee the philosophers
 never enter a deadlocked state?
 
 |<-0--|--0->|<-0--|--0->|<-0--|--0->
