@@ -1,0 +1,13 @@
+Function Pointers
+
+I created a process_t struct that contains the pid, arrival_time, and priority of each process.
+
+There are two compare functions that take in void pointers as inputs.  The arrival_time compare function takes in two void pointers that are in fact process_t pointers and creates two process_t pointers and assigns the pointer values from the void pointers to these two process_t pointers.  This allowed me to see the pid, arrival_time and priority of the pointers passed in.  
+
+The arrival time comparer returned (process1->arrival_time - process2->arrival_time) which sorts the times into ascending order.
+
+The priority comparer returns (process2->priority - process1->priority) which sorts the priority into descending order.  If the priorities are equal then it returns (process1->arrival_time - process2->arrival_time) which means this function will sort the priorities in descending order, and if the priorities are the same it will sort processes with the same priority into ascending arrival_time order.
+
+The program first reads in a .txt file to input the data into an array of process_t structs.
+I then passes the array and the appropriate comparison function into the qsort function which sorts the array.
+Lastly I output the sorted arrays to the terminal so we can see them.
