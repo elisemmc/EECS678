@@ -65,7 +65,6 @@ int main (int argc, char *argv[])
   }
 
   int length = statbuf.st_size;
-  printf( "filesize: %d\n", length );
 
   /* 
    * 2. go to the location corresponding to the last byte 
