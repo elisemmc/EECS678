@@ -255,7 +255,7 @@ int check_for_deadlock()
      * 5. Use time values to determine if deadlock has occurred.
      */
     printf( "usertime: %lu\n systime: %lu\n diner: %d\n", new_user_time, new_sys_time, i );
-    if( new_sys_time != 0 )
+    if ( new_user_time != user_time[i] && new_sys_time != sys_time[i] )
     {
         deadlock = 0;
     }
@@ -265,6 +265,12 @@ int check_for_deadlock()
      */
     fclose( statf );
 
+  }
+
+  for( i = 0; i < NUM_PHILS; i++ )
+  {
+    user_time[i] = new_user_time;
+    sys_time[i] = new_sys_time;
   }
   
   return deadlock;
