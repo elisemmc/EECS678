@@ -221,57 +221,45 @@ int check_for_deadlock()
   unsigned long new_user_time;
 
   deadlock = 1;
+
   for (i = 0; i < NUM_PHILS; i++) {
 
     /*
      * 1. Store the stat filename for this diner into a buffer. Use the sprintf
      * library call.
      */
-    
+    sprintf(filename, "/proc/self/task/%d/stat", diners[i]);
 
     /* 
      * 2. Use fopen to open the stat file as a file stream. Open it
      * with read only permissions.
      */
-
-
-
-
+    statf = fopen( filename, "r" );
 
     /* 
      * 3. Seek over uninteresting fields. Use fscanf to perform the seek.  You
      * also need to determine how many fields to skip over - see proc(5)
      * HINT: Use the the * qualifier to skip tokens without storing them.
      */
-
-
-
-
-
-
-    
+    for( j = 0; j < 13; j++ )
+    {
+        fscanf( statf, "%*s");
+    }
+   
     /* 
      * 4. Read the time values you want. Use fscanf again. 
-     */ 
+     */
+    fscanf( statf, "%lu %lu", &new_sys_time, &new_user_time );
 
-
-
-
-   
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
-   
- 
-
-
-
-
-
+    print( "usertime: %lu\n systime: %lu\n diner: %d\n", new_user_time, new_sys_time, i );
 
     /*
      * 6. Close the stat file stream 
      */
+    fclose( statf );
 
   }
   
