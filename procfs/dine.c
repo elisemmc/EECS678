@@ -16,7 +16,7 @@
 #define NUM_CHOPS NUM_PHILS
 #define FIELDS_TO_IGNORE 13
 
-#define DEADLOCK 0
+#define DEADLOCK 1
 #define ACTIVE_DURATION 200
 
 typedef struct {
