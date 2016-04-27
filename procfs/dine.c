@@ -222,13 +222,13 @@ int check_for_deadlock()
 
   deadlock = 1;
 
-  for (i = 0; i < NUM_PHILS; i++) {
+  for ( i = 0; i < NUM_PHILS; i++ ) {
 
     /*
      * 1. Store the stat filename for this diner into a buffer. Use the sprintf
      * library call.
      */
-    sprintf(filename, "/proc/self/task/%d/stat", diners[i]);
+    sprintf( filename, "/proc/self/task/%d/stat", diners[i].tid );
 
     /* 
      * 2. Use fopen to open the stat file as a file stream. Open it
