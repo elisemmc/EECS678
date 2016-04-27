@@ -254,7 +254,7 @@ int check_for_deadlock()
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
-    print( "usertime: %lu\n systime: %lu\n diner: %d\n", new_user_time, new_sys_time, i );
+    printf( "usertime: %lu\n systime: %lu\n diner: %d\n", new_user_time, new_sys_time, i );
 
     /*
      * 6. Close the stat file stream 
