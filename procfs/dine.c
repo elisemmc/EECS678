@@ -249,12 +249,16 @@ int check_for_deadlock()
     /* 
      * 4. Read the time values you want. Use fscanf again. 
      */
-    fscanf( statf, "%lu %lu", &new_sys_time, &new_user_time );
+    fscanf( statf, "%lu %lu", &new_user_time, &new_sys_time );
 
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
     printf( "usertime: %lu\n systime: %lu\n diner: %d\n", new_user_time, new_sys_time, i );
+    if( new_sys_time != 0 )
+    {
+        deadlock = 0;
+    }
 
     /*
      * 6. Close the stat file stream 
