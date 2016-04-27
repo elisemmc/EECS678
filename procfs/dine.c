@@ -16,7 +16,7 @@
 #define NUM_CHOPS NUM_PHILS
 #define FIELDS_TO_IGNORE 13
 
-#define DEADLOCK 0
+#define DEADLOCK 1
 #define ACTIVE_DURATION 200
 
 typedef struct {
@@ -254,9 +254,9 @@ int check_for_deadlock()
     /*
      * 5. Use time values to determine if deadlock has occurred.
      */
-    printf( "diner: %d", diner[i].tid );
-    printf( "usertime: %lu systime: %lu\n", new_user_time, new_sys_time, i );
-    printf( "prevtime: %lu prevsys: %lu\n", user_time[i], sys_time[0])
+    printf( "diner: %d\n", i );
+    printf( "usertime: %lu systime: %lu\n", new_user_time, new_sys_time );
+    printf( "prevtime: %lu prevsys: %lu\n", user_time[i], sys_time[i]);
     if ( new_user_time != user_time[i] || new_sys_time != sys_time[i] )
     {
         deadlock = 0;
@@ -268,7 +268,6 @@ int check_for_deadlock()
      * 6. Close the stat file stream 
      */
     fclose( statf );
-
 
   }
   
